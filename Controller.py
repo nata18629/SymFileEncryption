@@ -12,7 +12,7 @@ class Controller:
         self.model.file = file
 
     def save_key(self, file):
-        pass
+        self.model.get_key(file)
 
 
     def change_to_encryption(self, mode):

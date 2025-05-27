@@ -101,3 +101,6 @@ def corupt(filepath, byte_index=30):
             raise ValueError(f"BLAD: {e}")
     else:
         raise ValueError(f"ZA KROTKI PLIK")
+
+def generate_key():
+    return get_random_bytes(32)
