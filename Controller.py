@@ -5,7 +5,6 @@ class Controller:
         self.model = model
         self.main_view = view
         self.encryption_view = encryption_view
-        self.encryption_option = tk.StringVar(value='ENC')
         self.encryption_mode = tk.StringVar(value='ECB')
 
     def save_file(self, file):
@@ -18,6 +17,7 @@ class Controller:
     def change_to_encryption(self, mode):
         self.delete_frame(self.main_view)
         self.encryption_view.grid(row=1, column=1, padx=20, pady=20)
+        self.model.encryption_option = mode
         if mode == 'ENC':
             self.encryption_view.encryption_view()
         else:
@@ -31,9 +31,10 @@ class Controller:
 
     def run_model(self):
         if self.model.file is None:
-            self.main_view.error_file_message()
+            self.encryption_view.error_file_message()
             return
-        self.model.encryption_option = self.encryption_option.get()
+        if self.model.key is None:
+            self.encryption_view.error_key_message()
         self.model.encryption_mode = self.encryption_mode.get()
         self.model.encrypt_file()
 

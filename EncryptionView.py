@@ -44,5 +44,8 @@ class EncryptionView(ttk.Frame):
     def error_file_message(self):
         showinfo(title='ERROR', message="Please choose a correct file")
 
+    def error_key_message(self):
+        showinfo(title='ERROR', message="Please choose a correct key")
+
     def go_back(self):
         self.controller.change_to_main_view()
