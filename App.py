@@ -1,18 +1,20 @@
 import tkinter as tk
 
 from Controller import Controller
+from EncryptionView import EncryptionView
 from Model import Model
-from View import View
+from MainView import MainView
 
 
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.geometry("400x400")
+        self.geometry("450x450")
         self.title("Symmetric File Encryption")
-        view = View(self)
+        view = MainView(self)
+        encryption_view = EncryptionView(self)
         model = Model()
-        controller = Controller(model, view)
+        controller = Controller(model, view, encryption_view)
         view.set_controller(controller)
-        view.add_interface()
-        view.grid(row=0, column=0, padx=20, pady=20)
+        encryption_view.set_controller(controller)
+        controller.change_to_main_view()
