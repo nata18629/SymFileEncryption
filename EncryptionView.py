@@ -1,10 +1,8 @@
 from tkinter import ttk
 from tkinter.filedialog import askopenfilename
 from tkinter.messagebox import showinfo
+from Constants import *
 
-padding_x = 20
-padding_y = 20
-button_width = 25
 
 class EncryptionView(ttk.Frame):
     def __init__(self, parent):
@@ -29,8 +27,8 @@ class EncryptionView(ttk.Frame):
         ttk.Button(self, text="CHOOSE KEY", width=button_width, command=self.choose_key_clicked).pack(pady=padding_y)
         ttk.Button(self, text="CHOOSE FILE", width=button_width, command=self.choose_file_clicked).pack(pady=padding_y)
         ttk.Combobox(self, textvariable=self.controller.encryption_mode, values=["ECB", "CBC", "CTR"]).pack(pady=10)
-        ttk.Button(self, text="PROCEED", width=button_width, command=self.choose_key_clicked).pack(pady=padding_y)
-        ttk.Button(self, text="GO BACK", width=button_width, command=self.go_back).pack(pady=padding_y)
+        ttk.Button(self, text="PROCEED", width=button_width, command=self.choose_key_clicked).pack(pady=padding_y, side='right')
+        ttk.Button(self, text="GO BACK", width=button_width, command=self.go_back).pack(pady=padding_y, side='right')
     def choose_file_clicked(self):
         self.controller.save_file(askopenfilename())
 

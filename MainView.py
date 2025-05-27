@@ -1,9 +1,6 @@
 from tkinter import ttk
-from tkinter.filedialog import askopenfilename
-from tkinter.messagebox import showinfo
+from Constants import *
 
-padding_x = 20
-padding_y = 20
 
 class MainView(ttk.Frame):
     def __init__(self, parent):
@@ -12,8 +9,8 @@ class MainView(ttk.Frame):
         #self.grid(row=0, column=0, padx=20, pady=20)
 
     def main_view(self):
-        ttk.Button(self, text="ENCRYPTION", width=25, command=self.encryption_chosen).pack(pady=padding_y)
-        ttk.Button(self, text="DECRYPTION", width=25, command=self.decryption_chosen).pack(pady=padding_y)
+        ttk.Button(self, text="ENCRYPTION", width=button_width, command=self.encryption_chosen).pack(pady=padding_y, fill='x')
+        ttk.Button(self, text="DECRYPTION", width=button_width, command=self.decryption_chosen).pack(pady=padding_y, fill='x')
 
     def set_controller(self, controller):
         self.controller = controller

@@ -17,7 +17,7 @@ class Controller:
 
     def change_to_encryption(self, mode):
         self.delete_frame(self.main_view)
-        self.encryption_view.grid(row=0, column=0, padx=20, pady=20)
+        self.encryption_view.grid(row=1, column=1, padx=20, pady=20)
         if mode == 'ENC':
             self.encryption_view.encryption_view()
         else:
@@ -25,7 +25,7 @@ class Controller:
 
     def change_to_main_view(self):
         self.delete_frame(self.encryption_view)
-        self.main_view.grid(row=0, column=0, padx=20, pady=20)
+        self.main_view.grid(row=1, column=1, padx=20, pady=20)
         self.main_view.main_view()
 
 

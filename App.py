@@ -11,6 +11,14 @@ class App(tk.Tk):
         super().__init__()
         self.geometry("450x450")
         self.title("Symmetric File Encryption")
+
+        self.columnconfigure(0,weight=1)
+        self.columnconfigure(1,weight=1)
+        self.columnconfigure(2,weight=1)
+        self.rowconfigure(0,weight=1)
+        self.rowconfigure(1,weight=1)
+        self.rowconfigure(2,weight=1)
+
         view = MainView(self)
         encryption_view = EncryptionView(self)
         model = Model()
