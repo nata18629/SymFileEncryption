@@ -37,6 +37,9 @@ class EncryptionView(ttk.Frame):
     def choose_key_clicked(self):
         self.controller.save_key(askopenfilename())
 
+    def generate_key_clicked(self):
+        self.controller.save_key()
+
     def proceed_clicked(self):
         self.controller.run_model()
 

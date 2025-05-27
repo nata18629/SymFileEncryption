@@ -12,7 +12,8 @@ class Controller:
         self.model.file = file
 
     def save_key(self, file):
-        self.model.key = file
+        pass
+
 
     def change_to_encryption(self, mode):
         self.delete_frame(self.main_view)
