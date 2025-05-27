@@ -13,6 +13,8 @@ class Controller:
     def save_key(self, file):
         self.model.get_key(file)
 
+    def save_generated_key(self):
+        self.model.generate_key()
 
     def change_to_encryption(self, mode):
         self.delete_frame(self.main_view)
@@ -36,7 +38,8 @@ class Controller:
         if self.model.key is None:
             self.encryption_view.error_key_message()
         self.model.encryption_mode = self.encryption_mode.get()
-        self.model.encrypt_file()
+        if self.model.encrypt_file():
+            self.encryption_view.success_message()
 
     def delete_frame(self, frame):
         widgets = frame.winfo_children()

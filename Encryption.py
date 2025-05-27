@@ -103,4 +103,11 @@ def corupt(filepath, byte_index=30):
         raise ValueError(f"ZA KROTKI PLIK")
 
 def generate_key():
-    return get_random_bytes(32)
+    filepath = os.path.join(BASE_DIR, "key.txt")
+    key = get_random_bytes(32)
+    try:
+        with open(filepath, 'wb') as f:
+            f.write(key)
+    except Exception as e:
+        raise ValueError(f"BLAD: {e}")
+    return key
