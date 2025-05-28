@@ -9,9 +9,9 @@ BLOCK_SIZE = 16
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ENCRYPTED_DIR = os.path.join(BASE_DIR, 'encrypted')
 DECRYPTED_DIR = os.path.join(BASE_DIR, 'decrypted')
-CORRUPTED_DIR = os.path.join(BASE_DIR, 'corrupted')
+KEY_DIR = os.path.join(BASE_DIR, 'keys')
 
-for folder in [ENCRYPTED_DIR, DECRYPTED_DIR, CORRUPTED_DIR]:
+for folder in [ENCRYPTED_DIR, DECRYPTED_DIR, KEY_DIR]:
     os.makedirs(folder, exist_ok=True)
 
 def padding(data):
@@ -46,8 +46,7 @@ def encryption(filepath, key, mode):
     else:
         raise ValueError("NIEZNANY TRYB")
 
-    random_filename = secrets.token_hex(8) + ".enc"
-    filepath = os.path.join(ENCRYPTED_DIR, random_filename)
+    filepath = os.path.join(ENCRYPTED_DIR, os.path.basename(filepath))
     try:
         with open(filepath, 'wb') as f:
             f.write(output)
@@ -79,34 +78,17 @@ def decryption(filepath, key, mode):
     else:
         raise ValueError("NIEZNANY TRYB")
 
-    filename = os.path.basename(filepath).replace('.enc', '.dec')
-    filepath = os.path.join(DECRYPTED_DIR, filename)
+    filepath = os.path.join(DECRYPTED_DIR, os.path.basename(filepath))
     try:
         with open(filepath, 'wb') as f:
             f.write(output)
     except Exception as e:
         raise ValueError(f"BLAD: {e}")
 
-def corupt(filepath, byte_index=30):
-    try:
-        with open(filepath, 'rb') as f:
-            data = bytearray(f.read())
-    except Exception as e:
-        raise ValueError(f"BLAD: {e}")
-
-    if byte_index < len(data):
-        data[byte_index] ^= 0xFF
-        filepath = os.path.join(CORRUPTED_DIR, os.path.basename(filepath)+".dec")
-        try:
-            with open(filepath, 'wb') as f:
-                f.write(data)
-        except Exception as e:
-            raise ValueError(f"BLAD: {e}")
-    else:
-        raise ValueError(f"ZA KROTKI PLIK")
 
 def generate_key():
-    filepath = os.path.join(BASE_DIR, "key.txt")
+    random_filename = "key_" + secrets.token_hex(8) + ".txt"
+    filepath = os.path.join(KEY_DIR, random_filename)
     key = get_random_bytes(32)
     try:
         with open(filepath, 'wb') as f:
