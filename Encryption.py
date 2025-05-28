@@ -2,6 +2,7 @@ from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad, unpad
 import os
+import secrets
 #os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 BLOCK_SIZE = 16
@@ -39,13 +40,14 @@ def encryption(filepath, key, mode):
         output = iv + ciphertext
     elif mode == 'CTR':
         nonce = iv[:8]
-        cipher = AES.new(key, AES.MODE_CTR, nonce)
+        cipher = AES.new(key, AES.MODE_CTR, nonce=nonce)
         ciphertext = cipher.encrypt(input)
         output = nonce + ciphertext
     else:
         raise ValueError("NIEZNANY TRYB")
-    
-    filepath = os.path.join(ENCRYPTED_DIR, os.path.basename(filepath))
+
+    random_filename = secrets.token_hex(8) + ".enc"
+    filepath = os.path.join(ENCRYPTED_DIR, random_filename)
     try:
         with open(filepath, 'wb') as f:
             f.write(output)
@@ -72,12 +74,13 @@ def decryption(filepath, key, mode):
     elif mode == 'CTR':
         nonce = input[:8]
         ciphertext = input[8:]
-        cipher = AES.new(key, AES.MODE_CTR, nonce)
+        cipher = AES.new(key, AES.MODE_CTR, nonce=nonce)
         output = cipher.decrypt(ciphertext)
     else:
         raise ValueError("NIEZNANY TRYB")
-    
-    filepath = os.path.join(DECRYPTED_DIR, os.path.basename(filepath))
+
+    filename = os.path.basename(filepath).replace('.enc', '.dec')
+    filepath = os.path.join(DECRYPTED_DIR, filename)
     try:
         with open(filepath, 'wb') as f:
             f.write(output)
@@ -93,7 +96,7 @@ def corupt(filepath, byte_index=30):
 
     if byte_index < len(data):
         data[byte_index] ^= 0xFF
-        filepath = os.path.join(CORRUPTED_DIR, os.path.basename(filepath))
+        filepath = os.path.join(CORRUPTED_DIR, os.path.basename(filepath)+".dec")
         try:
             with open(filepath, 'wb') as f:
                 f.write(data)

@@ -38,7 +38,11 @@ class Controller:
         if self.model.key is None:
             self.encryption_view.error_key_message()
         self.model.encryption_mode = self.encryption_mode.get()
-        if self.model.encrypt_file():
+        try:
+            self.model.encrypt_file()
+        except Exception as e:
+            self.encryption_view.error_message(e)
+        else:
             self.encryption_view.success_message()
 
     def delete_frame(self, frame):
