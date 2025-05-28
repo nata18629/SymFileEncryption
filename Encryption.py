@@ -9,6 +9,7 @@ BLOCK_SIZE = 16
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ENCRYPTED_DIR = os.path.join(BASE_DIR, 'encrypted')
 DECRYPTED_DIR = os.path.join(BASE_DIR, 'decrypted')
+CORRUPTED_DIR = os.path.join(BASE_DIR, 'corrupted')
 KEY_DIR = os.path.join(BASE_DIR, 'keys')
 
 for folder in [ENCRYPTED_DIR, DECRYPTED_DIR, KEY_DIR]:
@@ -84,6 +85,24 @@ def decryption(filepath, key, mode):
             f.write(output)
     except Exception as e:
         raise ValueError(f"BLAD: {e}")
+    
+def corrupt(filepath, byte_index=30):
+    try:
+        with open(filepath, 'rb') as f:
+            data = bytearray(f.read())
+    except Exception as e:
+        raise ValueError(f"BLAD: {e}")
+
+    if byte_index < len(data):
+        data[byte_index] ^= 0xFF
+        filepath = os.path.join(CORRUPTED_DIR, os.path.basename(filepath))
+        try:
+            with open(filepath, 'wb') as f:
+                f.write(data)
+        except Exception as e:
+            raise ValueError(f"BLAD: {e}")
+    else:
+        raise ValueError(f"ZA KROTKI PLIK")
 
 
 def generate_key():
