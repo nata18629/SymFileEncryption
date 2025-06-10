@@ -1,0 +1,2 @@
+Temat 14 - Implementacja aplikacji szyfrujacej i deszyfrujacej pliki 
+z wykorzystaniem kryptografii symetrycznej.
